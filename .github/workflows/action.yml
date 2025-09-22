@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - '**'
+env:
+  DEFAULT: ${{ secrets.DEFAULT }}
 
 jobs:
   test:
@@ -63,7 +65,6 @@ jobs:
         run: npm run build
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
-          PAT: ${{ secrets.PAT }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
