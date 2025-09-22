@@ -5,8 +5,6 @@ on:
     branches:
       - main
       - '**'
-env:
-  DEFAULT: ${{ secrets.DEFAULT }}
 
 jobs:
   test:
@@ -65,11 +63,13 @@ jobs:
         run: npm run build
         env:
           GITHUB_REPOSITORY: ${{ github.repository }}
+          TOKEN: ${{ secrets.DEFAULT }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
         with:
           enablement: true
+          token: ${{ secrets.DEFAULT }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
