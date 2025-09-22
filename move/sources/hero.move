@@ -19,7 +19,16 @@ public struct HeroMetadata has key, store {
 
 #[allow(lint(self_transfer))]
 public fun create_hero(name: String, image_url: String, power: u64, ctx: &mut TxContext) {
-    
+
+    let id = sui::object::new(ctx);
+    let hero = Hero {id, name, image_url, power};
+    let sender = tx_context::sender(ctx);
+    sui::transfer::public_transfer(hero, sender);
+    let timestamp = ctx.epoch_timestamp_ms();
+    let meta_id = sui::object::new(ctx);
+    let heroMetadata = HeroMetadata {id: meta_id, timestamp};
+    sui::transfer::freeze_object(heroMetadata);
+
     // TODO: Create a new Hero struct with the given parameters
         // Hints:
         // Use object::new(ctx) to create a unique ID
